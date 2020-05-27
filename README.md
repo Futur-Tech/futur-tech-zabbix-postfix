@@ -26,6 +26,12 @@ Forked from http://admin.shamot.cz/?p=424
     Defaults:zabbix !requiretty
     zabbix ALL=(ALL) NOPASSWD: /usr/bin/zabbix-postfix-stats.sh
     
+    # or 
+    tee /etc/sudoers.d/zabbix-postfix << EOF
+    Defaults:zabbix !requiretty
+    zabbix ALL=(ALL) NOPASSWD: /usr/bin/zabbix-postfix-stats.sh
+    EOF
+
     systemctl restart zabbix-agent
 
 Finally import template_app_zabbix.xml and attach it to your host
