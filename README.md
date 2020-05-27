@@ -11,13 +11,10 @@ Forked from http://admin.shamot.cz/?p=424
 
 # Installation
     # for Ubuntu / Debian
-    apt-get install pflogsumm
+    apt-get install pflogsumm pygtail
     
     # for CentOS
     yum install postfix-perl-scripts
-    
-    cp pygtail.py /usr/sbin/
-    chmod +x /usr/sbin/pygtail.py
     
     # ! check MAILLOG path in zabbix-postfix-stats.sh
     cp zabbix-postfix-stats.sh /usr/bin/
