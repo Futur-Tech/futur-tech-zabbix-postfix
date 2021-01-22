@@ -11,18 +11,18 @@ Forked from http://admin.shamot.cz/?p=424
 
 # Installation
 
-# for Ubuntu / Debian
+### for Ubuntu / Debian
     apt-get install pflogsumm pygtail
 
-# for CentOS
+### for CentOS
     yum install postfix-perl-scripts
     
-# ! check MAILLOG path in zabbix-postfix-stats.sh
+## ! check MAILLOG path in zabbix-postfix-stats.sh
     cp zabbix-postfix-stats.sh /usr/bin/
     chmod +x /usr/local/bin/zabbix-postfix-stats.sh
     cp userparameter_postfix.conf /etc/zabbix/zabbix_agentd.d/
 
-# run visudo as root
+## run visudo as root
     visudo /etc/sudoers.d/zabbix-postfix
 
     Defaults:zabbix !requiretty
