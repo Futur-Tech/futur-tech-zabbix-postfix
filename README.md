@@ -26,6 +26,7 @@ Forked from http://admin.shamot.cz/?p=424
     visudo /etc/sudoers.d/zabbix-postfix
 
 Content of /etc/sudoers.d/zabbix-postfix:
+
     Defaults:zabbix !requiretty
     zabbix ALL=(ALL) NOPASSWD: /usr/local/bin/zabbix-postfix-stats.sh
     zabbix ALL=(root) NOPASSWD: /usr/bin/mailq
