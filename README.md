@@ -17,7 +17,10 @@ Forked from http://admin.shamot.cz/?p=424
 ### for CentOS
     yum install postfix-perl-scripts
     
-## ! check MAILLOG path in zabbix-postfix-stats.sh
+## Check MAILLOG path in zabbix-postfix-stats.sh
+    tail /var/log/mail.log
+
+## copy files
     cp zabbix-postfix-stats.sh /usr/local/bin/
     chmod +x /usr/local/bin/zabbix-postfix-stats.sh
     cp userparameter_postfix.conf /etc/zabbix/zabbix_agentd.d/
