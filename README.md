@@ -18,18 +18,18 @@ Forked from http://admin.shamot.cz/?p=424
     
     # ! check MAILLOG path in zabbix-postfix-stats.sh
     cp zabbix-postfix-stats.sh /usr/bin/
-    chmod +x /usr/bin/zabbix-postfix-stats.sh
+    chmod +x /usr/local/bin/zabbix-postfix-stats.sh
 
     cp userparameter_postfix.conf /etc/zabbix/zabbix_agentd.d/
     
     # run visudo as root
     Defaults:zabbix !requiretty
-    zabbix ALL=(ALL) NOPASSWD: /usr/bin/zabbix-postfix-stats.sh
+    zabbix ALL=(ALL) NOPASSWD: /usr/local/bin/zabbix-postfix-stats.sh
     
     # or 
     tee /etc/sudoers.d/zabbix-postfix << EOF
     Defaults:zabbix !requiretty
-    zabbix ALL=(ALL) NOPASSWD: /usr/bin/zabbix-postfix-stats.sh
+    zabbix ALL=(ALL) NOPASSWD: /usr/local/bin/zabbix-postfix-stats.sh
     EOF
 
     systemctl restart zabbix-agent
