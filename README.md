@@ -23,6 +23,9 @@ Forked from http://admin.shamot.cz/?p=424
     cp userparameter_postfix.conf /etc/zabbix/zabbix_agentd.d/
     
     # run visudo as root
+    
+    visudo /etc/sudoers.d/zabbix-postfix
+    
     Defaults:zabbix !requiretty
     zabbix ALL=(ALL) NOPASSWD: /usr/local/bin/zabbix-postfix-stats.sh
     
