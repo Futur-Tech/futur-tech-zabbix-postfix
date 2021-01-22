@@ -25,10 +25,12 @@ Forked from http://admin.shamot.cz/?p=424
 ## run visudo as root
     visudo /etc/sudoers.d/zabbix-postfix
 
+Content of /etc/sudoers.d/zabbix-postfix:
     Defaults:zabbix !requiretty
     zabbix ALL=(ALL) NOPASSWD: /usr/local/bin/zabbix-postfix-stats.sh
     zabbix ALL=(root) NOPASSWD: /usr/bin/mailq
 
+## restart Zabbix Agent
     systemctl restart zabbix-agent
 
 Finally import the template XML in Zabbix Server and attach it to your host
