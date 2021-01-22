@@ -28,8 +28,7 @@ Forked from http://admin.shamot.cz/?p=424
 Content of /etc/sudoers.d/zabbix-postfix:
 
     Defaults:zabbix !requiretty
-    zabbix ALL=(ALL) NOPASSWD: /usr/local/bin/zabbix-postfix-stats.sh
-    zabbix ALL=(root) NOPASSWD: /usr/bin/mailq
+    zabbix ALL=(ALL) NOPASSWD: /usr/local/bin/zabbix-postfix-stats.sh, /usr/bin/mailq
 
 ## restart Zabbix Agent
     systemctl restart zabbix-agent
