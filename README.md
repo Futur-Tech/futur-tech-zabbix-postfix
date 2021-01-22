@@ -18,7 +18,7 @@ Forked from http://admin.shamot.cz/?p=424
     yum install postfix-perl-scripts
     
 ## ! check MAILLOG path in zabbix-postfix-stats.sh
-    cp zabbix-postfix-stats.sh /usr/bin/
+    cp zabbix-postfix-stats.sh /usr/local/bin/
     chmod +x /usr/local/bin/zabbix-postfix-stats.sh
     cp userparameter_postfix.conf /etc/zabbix/zabbix_agentd.d/
 
