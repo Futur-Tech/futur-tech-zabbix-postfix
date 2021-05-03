@@ -7,7 +7,10 @@ Works for Zabbix 5.x Active Agent
 
 Everything is executed by only a few basic deploy scripts. 
 
-```bash 
+```bash
+cd /usr/local/src
+git clone https://github.com/Futur-Tech/futur-tech-zabbix-postfix.git
+
 ./deploy.sh 
 # Main deploy script
 
