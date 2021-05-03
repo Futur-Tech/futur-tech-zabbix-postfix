@@ -10,6 +10,7 @@ Everything is executed by only a few basic deploy scripts.
 ```bash
 cd /usr/local/src
 git clone https://github.com/Futur-Tech/futur-tech-zabbix-postfix.git
+cd futur-tech-zabbix-postfix
 
 ./deploy.sh 
 # Main deploy script
