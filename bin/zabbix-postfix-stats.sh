@@ -19,13 +19,13 @@ write_result () {
 }
 
 # check for binaries we need to run the script
-if [ ! -x ${PFLOGSUMM} ] || [ -z ${PFLOGSUMM} ] ; then
-        echo "ERROR: pflogsumm ${PFLOGSUMM} not found/install"
+if [ ! -x ${PFLOGSUMM} ] || [ -z "${PFLOGSUMM}" ] ; then
+        echo "ERROR: pflogsumm \"${PFLOGSUMM}\" not found/install"
         exit 1
 fi
 
-if [ ! -x ${PYGTAIL} ] || [ -z ${PYGTAIL} ] ; then
-        echo "ERROR: pygtail ${PYGTAIL} not found/install"
+if [ ! -x ${PYGTAIL} ] || [ -z "${PYGTAIL}" ] ; then
+        echo "ERROR: pygtail \"${PYGTAIL}\" not found/install"
         exit 1
 fi
 
