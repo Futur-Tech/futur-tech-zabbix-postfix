@@ -4,8 +4,8 @@ MAILLOG=/var/log/mail.log
 PFOFFSETFILE=/tmp/zabbix-postfix-offset.dat
 PFSTATSFILE=/tmp/postfix_statsfile.dat
 TEMPFILE=$(mktemp)
-PFLOGSUMM=/usr/sbin/pflogsumm
-PYGTAIL=/usr/local/sbin/pygtail.py
+PFLOGSUMM=$(which pflogsumm)
+PYGTAIL=$(which pygtail)
 
 # list of values we are interested in
 PFVALS=( 'received' 'delivered' 'forwarded' 'deferred' 'bounced' 'rejected' 'held' 'discarded' 'reject_warnings' 'bytes_received' 'bytes_delivered' )
