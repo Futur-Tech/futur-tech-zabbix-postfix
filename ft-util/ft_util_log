@@ -76,7 +76,23 @@ shift "$((OPTIND - 1))"
 echo_log () { 
     if [ -n "${log_msg}" ]
     then
-        echo "$(date +\%Y-\%m-\%d\ \%H:\%M:\%S) || ${s} |${data}| ${log_msg}" | tee -a ${pathArray[@]}
+        if tput colors &>/dev/null #check if terminal support colors 
+        then
+            # Let's put some color
+            # https://misc.flogisoft.com/bash/tip_colors_and_formatting
+            case ${s} in
+                alert) color="\e[41;93m" ;;
+                crit) color="\e[41m" ;;
+                err) color="\e[91m" ;;
+                warn) color="\e[33m" ;;
+                info) color="\e[94m" ;;
+                debug) color="\e[92m" ;;
+            esac
+
+            echo -e "${color}$(date +\%Y-\%m-\%d\ \%H:\%M:\%S) ||\e[7m ${s} \e[27m|${data}|\e[0m ${log_msg}" | tee -a ${pathArray[@]}
+        else
+            echo -e "$(date +\%Y-\%m-\%d\ \%H:\%M:\%S) || ${s} |${data}| ${log_msg}" | tee -a ${pathArray[@]}
+        fi
     fi
 }
 
@@ -119,4 +135,3 @@ then
     log_msg="$*"
     echo_log
 fi
-
