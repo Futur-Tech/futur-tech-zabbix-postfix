@@ -76,7 +76,8 @@ shift "$((OPTIND - 1))"
 echo_log () { 
     if [ -n "${log_msg}" ]
     then
-        if tput colors &>/dev/null #check if terminal support colors 
+        term_colors=$(tput colors -T $TERM) #check if terminal support colors
+        if [ -n "${term_colors}" ] && [ $term_colors -ge 8 ] 
         then
             # Let's put some color
             # https://misc.flogisoft.com/bash/tip_colors_and_formatting
