@@ -77,7 +77,7 @@ echo_log () {
     if [ -n "${log_msg}" ]
     then
         term_colors=$(tput colors -T $TERM) #check if terminal support colors
-        if [ -n "${term_colors}" ] && [ $term_colors -ge 8 ] 
+        if [ -n "${term_colors}" ] && [ $term_colors -ge 8 ] && [ $(sed 's/\..*//' /etc/debian_version) -ge 9 ] && [ -e "/etc/debian_version" ]
         then
             # Let's put some color
             # https://misc.flogisoft.com/bash/tip_colors_and_formatting
