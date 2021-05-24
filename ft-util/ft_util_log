@@ -74,10 +74,15 @@ done
 shift "$((OPTIND - 1))"
 
 echo_log () { 
+    
+    
     if [ -n "${log_msg}" ]
     then
+        timestamp="$(date +\%Y-\%m-\%d\ \%H:\%M:\%S)"
         term_colors=$(tput colors -T $TERM) #check if terminal support colors
-        if [ -n "${term_colors}" ] && [ $term_colors -ge 8 ] && [ $(sed 's/\..*//' /etc/debian_version) -ge 9 ] && [ -e "/etc/debian_version" ]
+        
+        # First output to stdout with or formatting formatting 
+        if [ -n "${term_colors}" ] && [ $term_colors -ge 8 ]
         then
             # Let's put some color
             # https://misc.flogisoft.com/bash/tip_colors_and_formatting
@@ -90,10 +95,16 @@ echo_log () {
                 debug) color="\e[92m" ;;
             esac
 
-            echo -e "${color}$(date +\%Y-\%m-\%d\ \%H:\%M:\%S) ||\e[7m ${s} \e[27m|${data}|\e[0m ${log_msg}" | tee -a ${pathArray[@]}
+            echo -e "${color}${timestamp} ||\e[7m ${s} \e[27m|${data}|\e[0m ${log_msg}"
         else
-            echo -e "$(date +\%Y-\%m-\%d\ \%H:\%M:\%S) || ${s} |${data}| ${log_msg}" | tee -a ${pathArray[@]}
+            echo -e "${timestamp} || ${s} |${data}| ${log_msg}"
         fi
+
+        # Output to file(s)
+        for f in ${pathArray[@]}
+        do
+            echo -e "${timestamp} || ${s} |${data}| ${log_msg}" >> "${f}"
+        done
     fi
 }
 
@@ -109,7 +120,7 @@ then
     do 
         if [ ! -d "$(dirname "${pathArray[k]}")" ] 
         then
-            echo -e  "\nft_util_log : Incorrect \$LOG_FILE path (folder missing): ${pathArray[$k]}\n" 1>&2;
+            echo -e  "\nft_util_log : Incorrect \$LOG_FILE path (folder missing): ${pathArray[k]}\n" 1>&2;
             unset pathArray[$k]
         fi
     done
@@ -120,7 +131,8 @@ then
     fi
 fi
 
-for i in ${!arrayData[@]}; do
+for i in ${!arrayData[@]}
+do
     data="$data ${arrayData[i]} |"
 done
 
