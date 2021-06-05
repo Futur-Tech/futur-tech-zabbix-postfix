@@ -8,13 +8,13 @@ usage()
     echo -e "\nUsage: $0 \
 ([-p <logfile_path>] \
 [-s <alert|crit|err|warn|info|debug>] \
-[-d <data>] [-i] <message> \n \
+[-d <pipe-separated data>] [-i] <message> \n \
 - You can supply several [-p path] \n \
 - If no path are suppled script will look into \$LOG_FILE for path. Several path can be supplied separated by space. \n \
 - If a file doesn't exist it will be created but not folder structure (if folder not existing, the path will be ignored).
 - Default severity is \"info\"\n \
 - Severity can be passed as int 0=info and 1-259=err
-- You can supply several [-d <data>] \n \
+- You can supply several data either [-d data1 -d data2 -d data3] or [-d \"data1|data2|data3\"] \n \
 - STDIN is accepted instead of <message> with [-i] option. This option must be last!\n \
 " 1>&2
     exit 1
@@ -62,7 +62,13 @@ while getopts "ip::s::d::" o; do
             esac
             ;;
         d)
-            arrayData+=("${OPTARG}")
+            IFSx=$IFS
+            IFS='|'
+            for arg in $OPTARG
+            do
+                arrayData+=("${arg}")
+            done        
+            IFS=$IFSx
             ;;
         *)
             usage
