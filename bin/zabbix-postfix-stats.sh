@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 MAILLOG=/var/log/mail.log
-PFOFFSETFILE=/tmp/zabbix-postfix-offset.dat
-PFSTATSFILE=/tmp/postfix_statsfile.dat
-TEMPFILE=$(mktemp)
+PFOFFSETFILE=/tmp/zabbix-postfix_offset.dat
+PFSTATSFILE=/tmp/zabbix-postfix_statsfile.dat
 PFLOGSUMM=$(which pflogsumm)
 PYGTAIL=$(which pygtail)
 
@@ -55,7 +54,6 @@ readvalue () {
                 echo "${value}"
 
         else
-                rm "${TEMPFILE}"
                 result_text="ERROR: could not get value \"$1\" from ${PFSTATSFILE}"
                 result_code="1"
                 write_result "${result_code}" "${result_text}"
@@ -87,6 +85,9 @@ updatevalue() {
 if [ -n "$1" ]; then
         readvalue "$1"
 else
+
+        TEMPFILE=$(mktemp /tmp/tmp.zabbix-postfix.XXXXXXXXXXX)
+
         # read the new part of mail log and read it with pflogsumm to get the summary
         "${PYGTAIL}" -o"${PFOFFSETFILE}" "${MAILLOG}" | "${PFLOGSUMM}" -h 0 -u 0 --no_bounce_detail --no_deferral_detail --no_reject_detail --no_smtpd_warnings --no_no_msg_size > "${TEMPFILE}" 2>/dev/null
 
@@ -101,9 +102,10 @@ else
                 updatevalue "$i"
         done
 
+        rm "${TEMPFILE}"
+
         result_text="OK: statistics updated"
         result_code="0"
         write_result "${result_code}" "${result_text}"
 fi
 
-rm "${TEMPFILE}"
