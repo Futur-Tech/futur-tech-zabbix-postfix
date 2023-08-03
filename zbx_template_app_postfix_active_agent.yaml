@@ -1,0 +1,335 @@
+zabbix_export:
+  version: '6.0'
+  date: '2023-08-03T15:44:02Z'
+  groups:
+    - uuid: 7f27dc73981940769811e7fae4a26772
+      name: Templates/Futur-Tech/Applications
+  templates:
+    - uuid: c66cad65829a4c439855de084c0f1a9c
+      template: 'Futur-Tech App Postfix Active Agent'
+      name: 'Futur-Tech App Postfix Active Agent'
+      description: 'https://github.com/Futur-Tech/futur-tech-zabbix-postfix'
+      groups:
+        - name: Templates/Futur-Tech/Applications
+      items:
+        - uuid: 65504ece8f8540d299ba6996dc9cea2a
+          name: 'SMTP Service'
+          type: SIMPLE
+          key: 'net.tcp.service[smtp]'
+          delay: 3m
+          history: 1w
+          tags:
+            - tag: Application
+              value: Postfix
+          triggers:
+            - uuid: d412632615e34b8987801ed64cbaad26
+              expression: 'max(/Futur-Tech App Postfix Active Agent/net.tcp.service[smtp],#5)=0'
+              name: 'SMTP service is down on {HOST.NAME}'
+              priority: HIGH
+        - uuid: e002225329fd4933b54dec3f05215ba8
+          name: 'Postfix Mail Queue'
+          type: ZABBIX_ACTIVE
+          key: postfix.pfmailq
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: 4233eb31ce144bb2952a7a8ad143a0b9
+          name: 'Postfix data update request'
+          type: ZABBIX_ACTIVE
+          key: postfix.update_data
+          delay: 3m
+          history: 30d
+          trends: '0'
+          value_type: TEXT
+          tags:
+            - tag: Application
+              value: Postfix
+          triggers:
+            - uuid: 1c55dc3e0e364570925e0f660ddce1ee
+              expression: 'find(/Futur-Tech App Postfix Active Agent/postfix.update_data,,"regexp","ERROR")=1'
+              name: 'Postfix statistics could not be updated'
+              priority: WARNING
+        - uuid: 991611fe74c14063b4bbfbb01a591855
+          name: 'Postfix Bounced'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[bounced]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+          triggers:
+            - uuid: f9c6162e704f4d8787431a477b57bcc9
+              expression: 'last(/Futur-Tech App Postfix Active Agent/postfix[bounced])>50'
+              name: 'Postfix: Too many bounced mails on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 6e7927e885084ce3828018341f6e39a7
+          name: 'Postfix Bytes Delivered'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[bytes_delivered]'
+          delay: 3m
+          history: 30d
+          units: B
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: caec247fda8a4af387c5f8f4bcaa40af
+          name: 'Postfix Bytes Received'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[bytes_received]'
+          delay: 3m
+          history: 30d
+          units: B
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: 0e5b52eadbab4bf88110ca2eb7f94d54
+          name: 'Postfix Deferred'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[deferred]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+          triggers:
+            - uuid: acbad6c1303145feb14abc15bb6b601e
+              expression: 'last(/Futur-Tech App Postfix Active Agent/postfix[deferred])>20'
+              name: 'Postfix: Too many deferred mails on {HOST.NAME}'
+              priority: HIGH
+        - uuid: 536f8384288a486f9641f1b1d6484aec
+          name: 'Postfix Delivered'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[delivered]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: 15ca9e66ba7c4c35b3cd7563222fbf48
+          name: 'Postfix Discarded'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[discarded]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: a3c598af73c24d698ee17f9d38c06366
+          name: 'Postfix Forwarded'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[forwarded]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: 4c55c722ba4d4124b34d235054217629
+          name: 'Postfix Held'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[held]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: 016d527151894543af9db1deb47f96cb
+          name: 'Postfix Received'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[received]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: 99477300ac754e678d58dd3f4749a467
+          name: 'Postfix Rejected'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[rejected]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+        - uuid: 92f7240f8f3744beaca229cfcf21b253
+          name: 'Postfix Reject Warnings'
+          type: ZABBIX_ACTIVE
+          key: 'postfix[reject_warnings]'
+          delay: 3m
+          history: 30d
+          units: mails
+          preprocessing:
+            - type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            - tag: Application
+              value: Postfix
+      tags:
+        - tag: Futur-Tech
+  triggers:
+    - uuid: 671824d08de0445eb6c1382e1cdefcc0
+      expression: 'last(/Futur-Tech App Postfix Active Agent/postfix[held])>100 or last(/Futur-Tech App Postfix Active Agent/postfix.pfmailq)>100'
+      name: 'Postfix: Too many held mails on {HOST.NAME}'
+      priority: WARNING
+    - uuid: fa5c88d8a9e948538a775e4c8c78d88d
+      expression: 'last(/Futur-Tech App Postfix Active Agent/postfix[rejected])>20 or last(/Futur-Tech App Postfix Active Agent/postfix[reject_warnings])>20'
+      name: 'Postfix: Too many rejected mails on {HOST.NAME}'
+      priority: HIGH
+  graphs:
+    - uuid: bfbd4fdbc7ff412a8d203ce578cf0509
+      name: 'Postfix Error Pie'
+      yaxismax: '0'
+      show_work_period: 'NO'
+      show_triggers: 'NO'
+      type: EXPLODED
+      show_3d: 'YES'
+      graph_items:
+        - color: C80000
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[bounced]'
+        - sortorder: '1'
+          color: 00C800
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[deferred]'
+        - sortorder: '2'
+          color: 0000C8
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[discarded]'
+        - sortorder: '3'
+          color: C800C8
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[rejected]'
+        - sortorder: '4'
+          color: 00C8C8
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[reject_warnings]'
+    - uuid: 64c1131454104321b1b68e05632bca9b
+      name: 'Postfix Mails Scoreboard'
+      height: '300'
+      show_work_period: 'NO'
+      show_triggers: 'NO'
+      graph_items:
+        - color: '009900'
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[bounced]'
+        - sortorder: '1'
+          color: FF99FF
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[reject_warnings]'
+        - sortorder: '2'
+          color: AAAA00
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: postfix.pfmailq
+        - sortorder: '3'
+          color: EE00EE
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[discarded]'
+        - sortorder: '4'
+          color: '880088'
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[rejected]'
+        - sortorder: '5'
+          color: 0000CC
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[received]'
+        - sortorder: '6'
+          color: FF6666
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[held]'
+        - sortorder: '7'
+          color: FFFF33
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[forwarded]'
+        - sortorder: '8'
+          color: 00EE00
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[delivered]'
+        - sortorder: '9'
+          color: EE0000
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[deferred]'
+    - uuid: 907fd67468614ef68be432a2bdef2451
+      name: 'Postfix Traffic'
+      show_work_period: 'NO'
+      show_triggers: 'NO'
+      graph_items:
+        - color: C80000
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[bytes_received]'
+        - sortorder: '1'
+          color: 00C800
+          item:
+            host: 'Futur-Tech App Postfix Active Agent'
+            key: 'postfix[bytes_delivered]'
